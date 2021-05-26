@@ -62,7 +62,7 @@ def make_toothpick_noise_model(
     model = toothpick.MultiFilterASTs(astfile, sedgrid.filters, vega_fname=vega_fname)
 
     # set the column mappings as the external file is BAND_VEGA or BAND_IN
-    model.set_data_mappings(in_pair=("in", "in"), out_pair=("out", "rate"), upcase=True)
+    model.set_data_mappings(in_pair=("in", "in"), out_pair=("out", "vega"), upcase=True)
 
     # compute binned biases and uncertainties as a function of flux
     model.fit_bins(nbins=nfluxbins)

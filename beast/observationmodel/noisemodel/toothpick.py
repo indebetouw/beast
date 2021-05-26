@@ -337,7 +337,9 @@ class MultiFilterASTs(NoiseModel):
 
         # check that the CUT_FLAG column is present
         if "CUT_FLAG" not in self.data.colnames:
-            raise ValueError("required CUT_FLAG column not present in AST output file")
+            print("CUT_FLAG column not present in AST output file")
+            self.data['CUT_FLAG']=np.zeros(len(self.data))
+            # raise ValueError("required CUT_FLAG column not present in AST output file")
 
         # setup iterator incuding progress bar if desired
         if progress is True:
@@ -349,6 +351,10 @@ class MultiFilterASTs(NoiseModel):
 
             mag_in = self.data[self.filter_aliases[filterk + "_in"]]
             flux_out = self.data[self.filter_aliases[filterk + "_out"]]
+            if "VEGA" in self.filter_aliases[filterk + "_out"]:
+                # FNAME_VEGA is a magnitude in the phat_small AST file
+                flux_out = 10 ** (-0.4 * flux_out)
+
 
             # convert min/max fluxes to vega normalized fluxes
             if min_flux is not None:
